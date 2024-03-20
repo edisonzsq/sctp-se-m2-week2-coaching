@@ -20,10 +20,84 @@
 </details>
 
 <details>
-<summary> 2. useState Hook</summary>
-## 2. `useState` hook
+<summary>2. Passing by reference vs value</summary>
 
-### 2.1 Declaring `useState` hooks
+## 2. Passing by reference vs value
+
+Primitive types in JavaScript are passed by value while object and array are passed by reference.
+
+Primitive (string):
+```js
+
+let myDog = "Bobby";
+
+let myCat = myDog;
+
+myCat = "Cathy";
+
+console.log(myDog); // prints "Bobby"
+
+```
+
+Object:
+
+```js
+let myDog = {
+    name:"Bobby"
+}
+
+let myCat = myDog;
+
+myCat.name = "Cathy";
+
+console.log(myDog); // prints {name: "Cathy"}
+```
+
+The best illustration to describe the difference between passing by value vs reference:
+
+<img src="https://www.mathwarehouse.com/programming/images/pass-by-reference-vs-pass-by-value-animation.gif" />
+
+**Explanation**
+
+Consider:
+```js
+const mySibling = 4;
+```
+When a variable (primitive or not) is created, the value is being stored in memory and a memory address (the reference) is allocated for it. For instance, `mySiblings` is given a value `4`. The memory address #123456 is being assigned to store `4`. When a variable is passed by reference, it is the address (#123456) instead of the value (4) that is being assigned to another variable. This means 2 variable may be pointing to the same memory address. Consider the same example again:
+
+Passing by reference:
+```js
+let myDog = {
+    name:"Bobby"
+}
+
+let myCat = myDog;
+
+myCat.name = "Cathy";
+
+// myDog and myCat is pointing to the same memory address #111222
+```
+
+Passing by value:
+
+```js
+let myDog = "Bobby";
+
+let myCat = myDog;
+
+myCat = "Cathy";
+
+// myDog has memory address #444555 while myCat has memory address #666777
+```
+
+</details>
+
+<details>
+<summary> 3. useState Hook</summary>
+
+## 3. `useState` hook
+
+### 3.1 Declaring `useState` hooks
 
 Importing and declaring state:
 ```js
@@ -46,7 +120,7 @@ export default AddressComponent;
 
 ```
 
-### 2.2 Updating a state
+### 3.2 Updating a state
 
 **New value NOT depending on existing value**
 
@@ -105,14 +179,66 @@ The above code snippet uses the [spread syntax](https://developer.mozilla.org/en
 
 </details>
 <details>
-<summary> 3. Event Handler</summary>
-## 3. Event Handlers
+<summary> 4. Event Handler</summary>
 
-### 3.1 Calling a function 
+## 4. Event Handlers
 
-### 3.2 Passing event handler (function) as props
+### 4.1 Demo on event handlers
 
-### 3.3 What is Higher Order Function
+In this example, the child component detect change in the input field and sends the data to the parent component using a function provided by the parent, passed to child via the prop. 
+
+> Run `coaching-app` to see live example.
+
+ParentComponent:
+```js
+import React, { useState } from 'react';
+import ChildComponent from './ChildComponent'; // Assuming the file name is ChildComponent.js
+
+function ParentComponent() {
+  const [inputValue, setInputValue] = useState('');
+
+  const handleInput = (value) => {
+    setInputValue(value);
+  };
+
+  return (
+    <div style={{border:"4px solid red", margin:"4px"}}>
+      <h2>Parent Component</h2>
+      <div>
+        <strong>Input from Child:</strong> {inputValue}
+      </div>
+      <ChildComponent onInputChange={handleInput} />      
+    </div>
+  );
+}
+
+export default ParentComponent;
+```
+
+ChildComponent:
+```js
+import React, { useState } from 'react';
+
+function ChildComponent({ onInputChange }) {
+  const [value, setValue] = useState('');
+
+  const handleChange = (e) => {
+    setValue(e.target.value);
+    onInputChange(e.target.value); // Call the function passed from the parent
+  };
+
+  return (
+    <div style={{border:"4px solid blue", margin:"4px", padding:"4px"}}>
+      <h2>Child Component</h2>
+      <input type="text" value={value} onChange={handleChange} />
+    </div>
+  );
+}
+
+export default ChildComponent;
+```
+
+### 4.2 What is Higher Order Function
 
 Either:
 - A function that takes another function as argument
@@ -120,8 +246,9 @@ Either:
 - Or both.
 </details>
 <details>
-<summary>4. Arrow Functions Variation</summary>
-## 4. Arrow Functions Variation
+<summary>5. Arrow Functions Variation</summary>
+
+## 5. Arrow Functions Variation
 
 Below are three variations of arrow functions:
 
@@ -147,9 +274,6 @@ const fetchMyName = salutation => `${salutation} Edison`;
 const fetchMyName = () => "Mr Edison";
 ```
 </details>
-<details>
-<summary>5. Passing by reference vs value</summary>
-## 5. Passing by reference vs value
-</details>
+
 
 END
