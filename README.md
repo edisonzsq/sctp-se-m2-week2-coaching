@@ -175,7 +175,7 @@ Update a part of the object:
     })
 ```
 
-The above code snippet uses the [spread syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) to make a copy of the `prevState` because state object is immutable. This means, you cannot change the state of `prevState`. To make changes to it, you have to make a copy and change the copy of the state.
+The above code snippet uses the [spread syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) to make a copy of the `prevState` because state object is [immutable](https://react.dev/learn/updating-objects-in-state). This means, you cannot change the state of `prevState`. To make changes to it, you have to make a copy and change the copy of the state.
 
 </details>
 <details>
